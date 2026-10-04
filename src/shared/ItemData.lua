@@ -6,11 +6,11 @@ local ItemData = {}
 
 -- Weight = how often this rarity is rolled. Higher = more common.
 ItemData.Rarities = {
-	{ Name = "Common", Weight = 600, ValueScale = 1, OnlineWaitScale = 1, Color = Color3.fromRGB(180, 180, 180) },
-	{ Name = "Uncommon", Weight = 250, ValueScale = 2.5, OnlineWaitScale = 1.5, Color = Color3.fromRGB(90, 200, 90) },
-	{ Name = "Rare", Weight = 110, ValueScale = 7, OnlineWaitScale = 2.5, Color = Color3.fromRGB(70, 130, 255) },
-	{ Name = "Epic", Weight = 35, ValueScale = 20, OnlineWaitScale = 4, Color = Color3.fromRGB(170, 70, 255) },
-	{ Name = "Legendary", Weight = 5, ValueScale = 75, OnlineWaitScale = 7, Color = Color3.fromRGB(255, 180, 30) },
+	{ Name = "Common", Emoji = "⚪", Weight = 600, ValueScale = 1, OnlineWaitScale = 1, Color = Color3.fromRGB(180, 180, 180) },
+	{ Name = "Uncommon", Emoji = "🟢", Weight = 250, ValueScale = 2.5, OnlineWaitScale = 1.5, Color = Color3.fromRGB(90, 200, 90) },
+	{ Name = "Rare", Emoji = "🔵", Weight = 110, ValueScale = 7, OnlineWaitScale = 2.5, Color = Color3.fromRGB(70, 130, 255) },
+	{ Name = "Epic", Emoji = "🟣", Weight = 35, ValueScale = 20, OnlineWaitScale = 4, Color = Color3.fromRGB(170, 70, 255) },
+	{ Name = "Legendary", Emoji = "🟡", Weight = 5, ValueScale = 75, OnlineWaitScale = 7, Color = Color3.fromRGB(255, 180, 30) },
 }
 
 -- ValueMultiplier applies to the item's base value after the roll.

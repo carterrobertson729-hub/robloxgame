@@ -45,11 +45,7 @@ local shownAt = 0
 
 itemFound.OnClientEvent:Connect(function(item)
 	if item.NoSearches then
-		rarityLabel.Text = "OUT OF SEARCHES"
-		rarityLabel.TextColor3 = Color3.fromRGB(255, 190, 80)
-		nameLabel.Text = "Free searches reset daily"
-		detailLabel.Text = "Tap More Searches for packs"
-		stroke.Color = Color3.fromRGB(255, 190, 80)
+		return -- the search shop pops up instead
 	elseif item.Full then
 		rarityLabel.Text = "BAG FULL"
 		rarityLabel.TextColor3 = Color3.fromRGB(255, 90, 90)
@@ -59,7 +55,7 @@ itemFound.OnClientEvent:Connect(function(item)
 	else
 		local rarity = ItemData.getRarity(item.Rarity)
 		local color = rarity and rarity.Color or Color3.new(1, 1, 1)
-		rarityLabel.Text = string.upper(item.Rarity)
+		rarityLabel.Text = (rarity and rarity.Emoji or "") .. " " .. string.upper(item.Rarity)
 		rarityLabel.TextColor3 = color
 		nameLabel.Text = ItemData.displayName(item)
 		detailLabel.Text = item.Condition .. "  -  worth $" .. item.Value

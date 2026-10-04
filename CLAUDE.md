@@ -103,6 +103,7 @@ Workers come second because they only automate jobs that already exist, so the j
 - Built so far: `Settings`, `ItemData` (rarities, conditions, placeholder brands, 10 clothing types), server `ItemRoller`, `PlayerData` (DataStore with retry and no-overwrite-on-failed-load), `Main.server.lua`. Not yet tested in Studio.
 - Built next: `FindService` (ProximityPrompt on the DonationBin, server rolls item, cooldown, bag limit), `FindReveal` client card. Re-run BuildStore to add the `DonationBin` (Station = Sourcing) outside the front door at Z = 10.
 - Built after that: `Net` (remotes), `Sync` (cash+inventory to client), `WashService` (washer prompts, load up to 3 dirty items, collect after timer, saved in player data), client `Hud` (cash + Bag panel), `Notices`. Untested in Studio.
+- Built: `Searches` (daily free + paid bonus searches with luck), `PurchaseService` (ProcessReceipt), client `SearchShop`. Untested.
 - Next: listing items, selling in person (racks + checkout), selling online.
 - Open question for Carter: is the store private per player or shared by everyone in a server? Washer jobs are per-player for now.
 
@@ -143,10 +144,13 @@ Keep the first release small and polished rather than large and unfinished.
 - Player data saves reliably and is tested for losing progress before anything else is built on it.
 - Test each feature in Studio before moving on, and tell Carter exactly how to test it himself.
 
-## Donation bin ideas (from Carter, in progress)
+## Donation bin and searches (decided by Carter)
 
-- The bin must be movable by Carter in Studio without moving the building. It is its own model (`Stations.DonationBin`, attribute `Station = Sourcing`); BuildStore.lua keeps its position when re-run. More bins can be added by copying it.
-- Free search limit of 3. Extra searches cost Robux, with bigger packs for more Robux. Needs decisions: how free searches refresh, pack sizes and prices. Roblox requires odds disclosure for paid random items, so the find odds must be shown in the game.
+- The bin is its own model (`Stations.DonationBin`, attribute `Station = Sourcing`) so Carter can move it in Studio without moving the building. BuildStore.lua keeps its position when re-run. More bins can be added by copying it.
+- **3 free searches per day** (resets each UTC day). More searches are sold for Robux in **three packs** (small, medium, large). Each pack gives a number of searches **plus a luck boost** that applies to those paid searches. Free searches use base luck.
+- Pack numbers and `ProductId`s live in `Settings.SearchPacks`. Prices shown are placeholders; Carter must create three Developer Products on the Creator Hub and paste the IDs in. ProductId 0 shows "Coming soon".
+- Roblox requires odds disclosure for paid random items. The shop shows real odds, computed from the same function the server rolls with (`ItemData.rarityWeights`).
+- Purchases are granted once (saved receipts) and only confirmed after a successful save.
 
 ## Ideas raised but not decided
 

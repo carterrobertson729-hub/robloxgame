@@ -44,7 +44,13 @@ local detailLabel = makeLabel(78, 22, Enum.Font.Gotham)
 local shownAt = 0
 
 itemFound.OnClientEvent:Connect(function(item)
-	if item.Full then
+	if item.NoSearches then
+		rarityLabel.Text = "OUT OF SEARCHES"
+		rarityLabel.TextColor3 = Color3.fromRGB(255, 190, 80)
+		nameLabel.Text = "Free searches reset daily"
+		detailLabel.Text = "Tap More Searches for packs"
+		stroke.Color = Color3.fromRGB(255, 190, 80)
+	elseif item.Full then
 		rarityLabel.Text = "BAG FULL"
 		rarityLabel.TextColor3 = Color3.fromRGB(255, 90, 90)
 		nameLabel.Text = "Wash and sell something first"

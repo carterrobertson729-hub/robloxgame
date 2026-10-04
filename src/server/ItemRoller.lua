@@ -7,9 +7,9 @@ local Settings = require(ReplicatedStorage.Shared.Settings)
 
 local ItemRoller = {}
 
-type Weighted = { Weight: number }
+local rng = Random.new()
 
-local function pickWeighted<T>(list: { T & Weighted }, rng: Random): T & Weighted
+local function pickWeighted(list: { any }): any
 	local total = 0
 	for _, entry in list do
 		total += entry.Weight
@@ -24,30 +24,9 @@ local function pickWeighted<T>(list: { T & Weighted }, rng: Random): T & Weighte
 	return list[#list]
 end
 
--- Luck makes rarer tiers more likely by shrinking the weight of the commonest tier.
-local function rarityList(luck: number)
-	if luck <= 0 then
-		return ItemData.Rarities
-	end
-	local adjusted = {}
-	for i, r in ItemData.Rarities do
-		local weight = r.Weight
-		if i == 1 then
-			weight = math.max(1, weight - luck * 10)
-		end
-		adjusted[i] = { Name = r.Name, Weight = weight, Source = r }
-	end
-	return adjusted
-end
-
-local rng = Random.new()
-
 function ItemRoller.roll(luck: number?)
-	luck = luck or Settings.Finding.BaseLuck
-	local list = rarityList(luck :: number)
-	local picked = pickWeighted(list, rng)
-	local rarity = (picked :: any).Source or picked
-	local condition = pickWeighted(ItemData.Conditions, rng)
+	local rarity = pickWeighted(ItemData.rarityWeights(luck or Settings.Finding.BaseLuck)).Rarity
+	local condition = pickWeighted(ItemData.Conditions)
 	local brand = ItemData.Brands[rng:NextInteger(1, #ItemData.Brands)]
 	local cloth = ItemData.Clothes[rng:NextInteger(1, #ItemData.Clothes)]
 

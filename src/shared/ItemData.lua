@@ -65,6 +65,23 @@ function ItemData.getCloth(id: string): any
 	return findBy(ItemData.Clothes, "Id", id)
 end
 
+-- Rarity weights with luck applied. Used by the server to roll and by the client to show the
+-- real odds (Roblox requires odds to be shown for paid random items). Luck = 0.25 means +25%
+-- weight on every rarity above Common.
+function ItemData.rarityWeights(luck: number): { any }
+	local list = {}
+	local total = 0
+	for i, r in ItemData.Rarities do
+		local weight = r.Weight * (i == 1 and 1 or (1 + luck))
+		total += weight
+		list[i] = { Rarity = r, Weight = weight, Chance = 0 }
+	end
+	for _, entry in list do
+		entry.Chance = entry.Weight / total
+	end
+	return list
+end
+
 -- "NorthPeak Hoodie"
 function ItemData.displayName(item: any): string
 	local brand = ItemData.getBrand(item.BrandId)

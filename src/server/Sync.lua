@@ -4,6 +4,7 @@
 local ServerScriptService = game:GetService("ServerScriptService")
 local PlayerData = require(ServerScriptService.Server.PlayerData)
 local Net = require(ServerScriptService.Server.Net)
+local Searches = require(ServerScriptService.Server.Searches)
 
 local Sync = {}
 
@@ -12,7 +13,12 @@ function Sync.push(player: Player)
 	if not data then
 		return
 	end
-	Net.event("DataUpdate"):FireClient(player, { Cash = data.Cash, Inventory = data.Inventory })
+	Net.event("DataUpdate"):FireClient(player, {
+		Cash = data.Cash,
+		Inventory = data.Inventory,
+		FreeSearches = Searches.freeLeft(data),
+		BonusSearches = Searches.bonusTotal(data),
+	})
 end
 
 function Sync.init()

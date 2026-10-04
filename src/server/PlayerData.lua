@@ -22,7 +22,22 @@ local function defaultData()
 	return {
 		Cash = Settings.Player.StartingCash,
 		Inventory = {}, -- list of item tables from ItemRoller.roll
+		Washing = {}, -- machine name -> { Items, DoneAt }
+		FreeUsed = 0, -- free searches used today
+		FreeDay = 0,
+		Bonus = {}, -- paid searches: { Count, Luck }
+		Receipts = {}, -- Robux purchase ids already granted
 	}
+end
+
+-- Adds any fields an older save does not have yet.
+local function fillMissing(data: any)
+	for key, value in defaultData() do
+		if data[key] == nil then
+			data[key] = value
+		end
+	end
+	return data
 end
 
 local function withRetry(fn: () -> any): (boolean, any)
@@ -57,17 +72,24 @@ function PlayerData.load(player: Player)
 		warn("Data load failed for", player.Name)
 		return
 	end
-	profiles[player] = data or defaultData()
+	profiles[player] = fillMissing(data or defaultData())
 end
 
-function PlayerData.save(player: Player)
+-- Returns true only if the save really succeeded.
+function PlayerData.save(player: Player): boolean
 	local data = profiles[player]
-	if not data or loadFailed[player] then
-		return
+	if not data or loadFailed[player] or not storeOk then
+		return false
 	end
-	withRetry(function()
+	local ok = withRetry(function()
 		store:SetAsync("Player_" .. player.UserId, data)
 	end)
+	return ok
+end
+
+-- True when this player's data could not be loaded, so it is temporary and never saved.
+function PlayerData.isTemporary(player: Player): boolean
+	return loadFailed[player] == true
 end
 
 function PlayerData.get(player: Player)

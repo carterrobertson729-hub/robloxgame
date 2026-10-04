@@ -10,6 +10,7 @@ local ItemRoller = require(ServerScriptService.Server.ItemRoller)
 local PlayerData = require(ServerScriptService.Server.PlayerData)
 local Net = require(ServerScriptService.Server.Net)
 local Sync = require(ServerScriptService.Server.Sync)
+local Searches = require(ServerScriptService.Server.Searches)
 
 local FindService = {}
 
@@ -31,7 +32,14 @@ local function onSearch(player: Player)
 		return
 	end
 
-	local item = ItemRoller.roll()
+	local allowed, luck = Searches.consume(data)
+	if not allowed then
+		Net.event("ItemFound"):FireClient(player, { NoSearches = true })
+		Sync.push(player)
+		return
+	end
+
+	local item = ItemRoller.roll(luck)
 	table.insert(data.Inventory, item)
 	Net.event("ItemFound"):FireClient(player, item)
 	Sync.push(player)

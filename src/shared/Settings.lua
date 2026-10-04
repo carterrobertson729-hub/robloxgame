@@ -34,9 +34,9 @@ Settings.ShopImages = {
 }
 
 Settings.SearchPacks = {
-	{ Id = "small", Name = "Small Pack", ProductId = 0, Robux = 25, Searches = 5, Luck = 0.10 },
-	{ Id = "medium", Name = "Medium Pack", ProductId = 0, Robux = 75, Searches = 20, Luck = 0.25 },
-	{ Id = "large", Name = "Large Pack", ProductId = 0, Robux = 199, Searches = 60, Luck = 0.50 },
+	{ Id = "small", Name = "Small Pack", ProductId = 0, Robux = 25, Searches = 10, Luck = 0.05 },
+	{ Id = "medium", Name = "Medium Pack", ProductId = 0, Robux = 75, Searches = 30, Luck = 0.15 },
+	{ Id = "large", Name = "Large Pack", ProductId = 0, Robux = 199, Searches = 100, Luck = 0.30 },
 }
 
 Settings.Washing = {

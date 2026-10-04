@@ -120,9 +120,14 @@ station("ListingDesk", "Listing", Vector3.new(10, 4, 5), Vector3.new(5, 2.5, -11
 station("PackingTable", "Packing", Vector3.new(12, 4, 6), Vector3.new(28, 2.5, -105), Color3.fromRGB(190, 160, 110))
 
 -- Sourcing spot outside the front door (the front wall is at Z = -20, spawn is on the +Z side).
-station("DonationBin", "Sourcing", Vector3.new(6, 5, 4), Vector3.new(0, 3, 10), Color3.fromRGB(40, 120, 70))
+local BIN_SIZE = Vector3.new(4, 3.5, 3)
+local BIN_GROUND_Y = BIN_SIZE.Y / 2 -- the baseplate top is at Y = 0
+station("DonationBin", "Sourcing", BIN_SIZE, Vector3.new(0, BIN_GROUND_Y, 10), Color3.fromRGB(40, 120, 70))
 if savedBinCFrame then
-	stations.DonationBin:PivotTo(savedBinCFrame)
+	-- Keep where you put it (and which way it faces), but sit it on the ground at the new size.
+	local at = savedBinCFrame.Position
+	local turn = savedBinCFrame - at
+	stations.DonationBin:PivotTo(CFrame.new(at.X, BIN_GROUND_Y, at.Z) * turn)
 end
 
 store.Parent = workspace

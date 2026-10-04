@@ -72,13 +72,41 @@ label.Font = Enum.Font.GothamBold
 label.Parent = gui
 
 -- Stations: a Model with a PrimaryPart and a "Station" attribute so scripts can find them.
-local function station(name, kind, size, pos, color)
+local function station(name, kind, size, pos, color, decorate)
 	local m = Instance.new("Model")
 	m.Name = name
 	local body = part(m, "Body", size, pos, color)
 	m.PrimaryPart = body
 	m:SetAttribute("Station", kind)
+	if decorate then
+		decorate(m, body)
+	end
 	m.Parent = stations
+end
+
+-- A round part facing the front (+Z). Roblox cylinders point along X, so turn them 90 degrees.
+local function disc(parent, name, diameter, thickness, pos, color, material)
+	local p = part(parent, name, Vector3.new(thickness, diameter, diameter), pos, color, material)
+	p.Shape = Enum.PartType.Cylinder
+	p.CFrame = CFrame.new(pos) * CFrame.Angles(0, math.rad(90), 0)
+	return p
+end
+
+-- Front-loading washing machine: door ring, glass window with clothes inside, control panel.
+local function washerDetails(m, body)
+	local pos = body.Position
+	local frontZ = pos.Z + body.Size.Z / 2
+	local doorY = pos.Y - 0.3
+	disc(m, "DoorRing", 4.4, 0.4, Vector3.new(pos.X, doorY, frontZ + 0.15), Color3.fromRGB(150, 150, 160), Enum.Material.Metal)
+	disc(m, "Drum", 3.6, 0.3, Vector3.new(pos.X, doorY, frontZ + 0.3), Color3.fromRGB(40, 40, 50))
+	disc(m, "Clothes", 2.2, 0.2, Vector3.new(pos.X, doorY - 0.6, frontZ + 0.42), Color3.fromRGB(220, 90, 120))
+	local glass = disc(m, "Glass", 3.6, 0.15, Vector3.new(pos.X, doorY, frontZ + 0.55), Color3.fromRGB(150, 200, 235), Enum.Material.Glass)
+	glass.Transparency = 0.5
+	-- Control panel across the top
+	part(m, "Panel", Vector3.new(5.4, 1.1, 0.3), Vector3.new(pos.X, pos.Y + 2.4, frontZ + 0.1), Color3.fromRGB(60, 60, 70))
+	disc(m, "Knob", 0.9, 0.3, Vector3.new(pos.X - 1.7, pos.Y + 2.4, frontZ + 0.4), Color3.fromRGB(200, 200, 210), Enum.Material.Metal)
+	part(m, "Display", Vector3.new(1.4, 0.5, 0.2), Vector3.new(pos.X + 0.4, pos.Y + 2.4, frontZ + 0.3), Color3.fromRGB(80, 220, 140), Enum.Material.Neon)
+	disc(m, "StartButton", 0.7, 0.3, Vector3.new(pos.X + 1.9, pos.Y + 2.4, frontZ + 0.4), Color3.fromRGB(230, 70, 70))
 end
 
 local rackColor = Color3.fromRGB(110, 80, 60)
@@ -86,8 +114,8 @@ for i = 1, 4 do
 	station("Rack" .. i, "Rack", Vector3.new(12, 6, 3), Vector3.new(-30 + (i - 1) * 20, 3.5, -35), rackColor)
 end
 station("Checkout", "Checkout", Vector3.new(10, 4, 4), Vector3.new(25, 2.5, -70), Color3.fromRGB(60, 90, 140))
-station("Washer1", "Washer", Vector3.new(6, 6, 6), Vector3.new(-30, 3.5, -105), Color3.fromRGB(220, 220, 230))
-station("Washer2", "Washer", Vector3.new(6, 6, 6), Vector3.new(-20, 3.5, -105), Color3.fromRGB(220, 220, 230))
+station("Washer1", "Washer", Vector3.new(6, 6, 6), Vector3.new(-30, 3.5, -105), Color3.fromRGB(235, 235, 240), washerDetails)
+station("Washer2", "Washer", Vector3.new(6, 6, 6), Vector3.new(-20, 3.5, -105), Color3.fromRGB(235, 235, 240), washerDetails)
 station("ListingDesk", "Listing", Vector3.new(10, 4, 5), Vector3.new(5, 2.5, -110), Color3.fromRGB(80, 80, 90))
 station("PackingTable", "Packing", Vector3.new(12, 4, 6), Vector3.new(28, 2.5, -105), Color3.fromRGB(190, 160, 110))
 

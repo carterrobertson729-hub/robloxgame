@@ -6,7 +6,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local TweenService = game:GetService("TweenService")
 
 local ItemData = require(ReplicatedStorage.Shared.ItemData)
-local itemFound = ReplicatedStorage:WaitForChild("Remotes"):WaitForChild("ItemFound")
+local itemFound = ReplicatedStorage:WaitForChild("Remotes"):WaitForChild("ItemFound") :: RemoteEvent
 
 local gui = Instance.new("ScreenGui")
 gui.Name = "FindReveal"
@@ -41,33 +41,6 @@ local rarityLabel = makeLabel(8, 24, Enum.Font.GothamBold)
 local nameLabel = makeLabel(36, 38, Enum.Font.GothamBold)
 local detailLabel = makeLabel(78, 22, Enum.Font.Gotham)
 
-local function rarityColor(name: string): Color3
-	for _, r in ItemData.Rarities do
-		if r.Name == name then
-			return r.Color
-		end
-	end
-	return Color3.new(1, 1, 1)
-end
-
-local function brandName(id: string): string
-	for _, b in ItemData.Brands do
-		if b.Id == id then
-			return b.Name
-		end
-	end
-	return id
-end
-
-local function clothName(id: string): string
-	for _, c in ItemData.Clothes do
-		if c.Id == id then
-			return c.Name
-		end
-	end
-	return id
-end
-
 local shownAt = 0
 
 itemFound.OnClientEvent:Connect(function(item)
@@ -78,10 +51,11 @@ itemFound.OnClientEvent:Connect(function(item)
 		detailLabel.Text = ""
 		stroke.Color = Color3.fromRGB(255, 90, 90)
 	else
-		local color = rarityColor(item.Rarity)
+		local rarity = ItemData.getRarity(item.Rarity)
+		local color = rarity and rarity.Color or Color3.new(1, 1, 1)
 		rarityLabel.Text = string.upper(item.Rarity)
 		rarityLabel.TextColor3 = color
-		nameLabel.Text = brandName(item.BrandId) .. " " .. clothName(item.ClothId)
+		nameLabel.Text = ItemData.displayName(item)
 		detailLabel.Text = item.Condition .. "  -  worth $" .. item.Value
 		stroke.Color = color
 	end

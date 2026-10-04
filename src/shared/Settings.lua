@@ -21,7 +21,8 @@ Settings.Finding = {
 
 Settings.Washing = {
 	SecondsPerLoad = 8,
-	MachineCapacity = 3,
+	MachineCapacity = 3, -- items per load
+	PromptCooldown = 0.5,
 }
 
 Settings.Player = {

@@ -8,6 +8,8 @@ local ServerScriptService = game:GetService("ServerScriptService")
 local Settings = require(ReplicatedStorage.Shared.Settings)
 local ItemRoller = require(ServerScriptService.Server.ItemRoller)
 local PlayerData = require(ServerScriptService.Server.PlayerData)
+local Net = require(ServerScriptService.Server.Net)
+local Sync = require(ServerScriptService.Server.Sync)
 
 local FindService = {}
 
@@ -25,18 +27,14 @@ local function onSearch(player: Player)
 	lastSearch[player] = now
 
 	if #data.Inventory >= Settings.Player.InventoryLimit then
-		FindService.notify(player, { Full = true })
+		Net.event("ItemFound"):FireClient(player, { Full = true })
 		return
 	end
 
 	local item = ItemRoller.roll()
 	table.insert(data.Inventory, item)
-	FindService.notify(player, item)
-end
-
-function FindService.notify(player: Player, payload: any)
-	local remote = ReplicatedStorage.Remotes.ItemFound
-	remote:FireClient(player, payload)
+	Net.event("ItemFound"):FireClient(player, item)
+	Sync.push(player)
 end
 
 local function setupSpot(spot: Model)
@@ -55,12 +53,7 @@ local function setupSpot(spot: Model)
 end
 
 function FindService.init()
-	local remotes = Instance.new("Folder")
-	remotes.Name = "Remotes"
-	remotes.Parent = ReplicatedStorage
-	local found = Instance.new("RemoteEvent")
-	found.Name = "ItemFound"
-	found.Parent = remotes
+	Net.event("ItemFound") -- make sure it exists before clients look for it
 
 	Players.PlayerRemoving:Connect(function(p)
 		lastSearch[p] = nil

@@ -44,4 +44,32 @@ ItemData.Clothes = {
 	{ Id = "windbreaker", Name = "Windbreaker", BaseValue = 16 },
 }
 
+local function findBy(list: { any }, key: string, value: any): any
+	for _, entry in list do
+		if entry[key] == value then
+			return entry
+		end
+	end
+	return nil
+end
+
+function ItemData.getRarity(name: string): any
+	return findBy(ItemData.Rarities, "Name", name)
+end
+
+function ItemData.getBrand(id: string): any
+	return findBy(ItemData.Brands, "Id", id)
+end
+
+function ItemData.getCloth(id: string): any
+	return findBy(ItemData.Clothes, "Id", id)
+end
+
+-- "NorthPeak Hoodie"
+function ItemData.displayName(item: any): string
+	local brand = ItemData.getBrand(item.BrandId)
+	local cloth = ItemData.getCloth(item.ClothId)
+	return (brand and brand.Name or item.BrandId) .. " " .. (cloth and cloth.Name or item.ClothId)
+end
+
 return ItemData

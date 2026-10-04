@@ -23,6 +23,7 @@ Settings.Finding = {
 
 -- Robux search packs. Carter picks the numbers. Robux is only the label shown in the game;
 -- the real price is set on the Creator Hub when you create the Developer Product.
+-- ImageId = your own picture for the pack's box (asset ID number, in quotes); empty shows the Emoji.
 -- ProductId 0 = not created yet (the button shows "Coming soon").
 -- Pictures that bounce in the out-of-searches popup. Put an image asset ID (just the number,
 -- uploaded on the Creator Hub) in each slot. An empty slot shows the emoji instead.
@@ -34,9 +35,9 @@ Settings.ShopImages = {
 }
 
 Settings.SearchPacks = {
-	{ Id = "small", Name = "Small Pack", ProductId = 0, Robux = 25, Searches = 10, Luck = 0.05 },
-	{ Id = "medium", Name = "Medium Pack", ProductId = 0, Robux = 75, Searches = 30, Luck = 0.15 },
-	{ Id = "large", Name = "Large Pack", ProductId = 0, Robux = 199, Searches = 100, Luck = 0.30 },
+	{ Id = "small", Name = "Small Pack", ProductId = 0, Robux = 25, Searches = 10, Luck = 0.05, Emoji = "🎁", ImageId = "" },
+	{ Id = "medium", Name = "Medium Pack", ProductId = 0, Robux = 75, Searches = 30, Luck = 0.15, Emoji = "🎉", ImageId = "" },
+	{ Id = "large", Name = "Large Pack", ProductId = 0, Robux = 199, Searches = 100, Luck = 0.30, Emoji = "💎", ImageId = "" },
 }
 
 Settings.Washing = {

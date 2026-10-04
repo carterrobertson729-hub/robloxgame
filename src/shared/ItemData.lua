@@ -30,18 +30,19 @@ ItemData.Brands = {
 	{ Id = "plainthread", Name = "Plain Thread", Prestige = 0.8 },
 }
 
--- BaseValue is in cash at Common/Good/Prestige 1.0. Placeholder numbers to tune after playtesting.
+-- BaseValue is in cash at Common/Good/Prestige 1.0. Keep BaseValue at 4.76 or less so a Common item
+-- (best case: Like New x1.4, top brand x1.5) never goes over $10. Placeholder numbers to tune.
 ItemData.Clothes = {
-	{ Id = "tee", Name = "T-Shirt", BaseValue = 6 },
-	{ Id = "longsleeve", Name = "Long Sleeve", BaseValue = 8 },
-	{ Id = "hoodie", Name = "Hoodie", BaseValue = 14 },
-	{ Id = "jeans", Name = "Jeans", BaseValue = 12 },
-	{ Id = "cargo", Name = "Cargo Pants", BaseValue = 13 },
-	{ Id = "jacket", Name = "Jacket", BaseValue = 20 },
-	{ Id = "sneakers", Name = "Sneakers", BaseValue = 18 },
-	{ Id = "cap", Name = "Cap", BaseValue = 5 },
-	{ Id = "dress", Name = "Dress", BaseValue = 15 },
-	{ Id = "windbreaker", Name = "Windbreaker", BaseValue = 16 },
+	{ Id = "tee", Name = "T-Shirt", BaseValue = 2 },
+	{ Id = "longsleeve", Name = "Long Sleeve", BaseValue = 2.5 },
+	{ Id = "hoodie", Name = "Hoodie", BaseValue = 4.5 },
+	{ Id = "jeans", Name = "Jeans", BaseValue = 3.5 },
+	{ Id = "cargo", Name = "Cargo Pants", BaseValue = 3.5 },
+	{ Id = "jacket", Name = "Jacket", BaseValue = 4.5 },
+	{ Id = "sneakers", Name = "Sneakers", BaseValue = 4 },
+	{ Id = "cap", Name = "Cap", BaseValue = 1.5 },
+	{ Id = "dress", Name = "Dress", BaseValue = 4 },
+	{ Id = "windbreaker", Name = "Windbreaker", BaseValue = 4 },
 }
 
 local function findBy(list: { any }, key: string, value: any): any

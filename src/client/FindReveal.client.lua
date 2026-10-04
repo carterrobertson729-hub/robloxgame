@@ -37,9 +37,9 @@ local function makeLabel(y: number, h: number, font: Enum.Font): TextLabel
 	return l
 end
 
-local rarityLabel = makeLabel(8, 24, Enum.Font.GothamBold)
-local nameLabel = makeLabel(36, 38, Enum.Font.GothamBold)
-local detailLabel = makeLabel(78, 22, Enum.Font.Gotham)
+local rarityLabel = makeLabel(8, 24, Enum.Font.FredokaOne)
+local nameLabel = makeLabel(36, 38, Enum.Font.FredokaOne)
+local detailLabel = makeLabel(78, 22, Enum.Font.FredokaOne)
 
 local shownAt = 0
 

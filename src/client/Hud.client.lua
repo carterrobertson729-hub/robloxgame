@@ -14,6 +14,7 @@ local requestData = remotes:WaitForChild("RequestData") :: RemoteEvent
 local gui = Instance.new("ScreenGui")
 gui.Name = "Hud"
 gui.ResetOnSpawn = false
+gui.DisplayOrder = 10 -- stays above the other screens
 gui.Parent = Players.LocalPlayer:WaitForChild("PlayerGui")
 
 local function panel(name: string, size: UDim2, pos: UDim2): Frame
@@ -29,7 +30,9 @@ local function panel(name: string, size: UDim2, pos: UDim2): Frame
 	return f
 end
 
-local cashBox = panel("Cash", UDim2.fromOffset(150, 40), UDim2.fromOffset(16, 16))
+-- The three always-visible boxes (cash, bag, searches) sit at the left-middle of the screen, away from
+-- the Roblox chat window and menu, which cover the top corners and block clicks.
+local cashBox = panel("Cash", UDim2.fromOffset(230, 44), UDim2.new(0, 16, 0.5, -76))
 local cashLabel = Instance.new("TextLabel")
 cashLabel.Size = UDim2.fromScale(1, 1)
 cashLabel.BackgroundTransparency = 1
@@ -40,8 +43,8 @@ cashLabel.Text = "$0"
 cashLabel.Parent = cashBox
 
 local bagButton = Instance.new("TextButton")
-bagButton.Size = UDim2.fromOffset(150, 40)
-bagButton.Position = UDim2.fromOffset(16, 64)
+bagButton.Size = UDim2.fromOffset(230, 44)
+bagButton.Position = UDim2.new(0, 16, 0.5, -24)
 bagButton.BackgroundColor3 = Color3.fromRGB(60, 90, 140)
 bagButton.BorderSizePixel = 0
 bagButton.Font = Enum.Font.FredokaOne
@@ -51,7 +54,7 @@ bagButton.Text = "Bag 0/" .. Settings.Player.InventoryLimit
 bagButton.Parent = gui
 Instance.new("UICorner", bagButton).CornerRadius = UDim.new(0, 10)
 
-local bag = panel("Bag", UDim2.fromOffset(380, 360), UDim2.fromOffset(16, 112))
+local bag = panel("Bag", UDim2.fromOffset(380, 360), UDim2.new(0, 262, 0.5, -180))
 bag.Visible = false
 local list = Instance.new("ScrollingFrame")
 list.Size = UDim2.new(1, -16, 1, -16)

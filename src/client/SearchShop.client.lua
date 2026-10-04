@@ -19,6 +19,7 @@ local player = Players.LocalPlayer
 local gui = Instance.new("ScreenGui")
 gui.Name = "SearchShop"
 gui.ResetOnSpawn = false
+gui.DisplayOrder = 10 -- stays above the other screens
 gui.Parent = player:WaitForChild("PlayerGui")
 
 local function round(obj: GuiObject, radius: number)
@@ -172,14 +173,14 @@ end
 
 -- Odds are one tap away (Roblox requires them to be viewable for paid random items).
 local oddsButton = Instance.new("TextButton")
-oddsButton.Size = UDim2.fromOffset(150, 30)
-oddsButton.Position = UDim2.new(0.5, -75, 0, 372)
+oddsButton.Size = UDim2.fromOffset(110, 26)
+oddsButton.Position = UDim2.new(0.5, -55, 0, 380)
 oddsButton.BackgroundColor3 = Color3.fromRGB(60, 66, 96)
 oddsButton.BorderSizePixel = 0
 oddsButton.Font = FONT
-oddsButton.TextSize = 16
+oddsButton.TextSize = 14
 oddsButton.TextColor3 = Color3.new(1, 1, 1)
-oddsButton.Text = "🎲 View odds"
+oddsButton.Text = "🎲 Odds"
 oddsButton.Parent = shop
 round(oddsButton, 10)
 
@@ -200,7 +201,7 @@ local function oddsText(luck: number): string
 	return table.concat(parts, "   ")
 end
 
-local lines = { "🎲 Your odds on every search:", "🆓 Free: " .. oddsText(Settings.Finding.BaseLuck) }
+local lines = { "🆓 Free: " .. oddsText(Settings.Finding.BaseLuck) }
 for _, pack in Settings.SearchPacks do
 	table.insert(lines, pack.Emoji .. " " .. pack.Name .. ": " .. oddsText(pack.Luck))
 end
@@ -245,10 +246,10 @@ close.Activated:Connect(function()
 	shop.Visible = false
 end)
 
--- Counter at the top left. Tap it to open the same popup.
+-- Counter under the cash and bag boxes. Tap it to open the same popup.
 local counter = Instance.new("TextButton")
-counter.Size = UDim2.fromOffset(230, 40)
-counter.Position = UDim2.fromOffset(182, 16)
+counter.Size = UDim2.fromOffset(230, 44)
+counter.Position = UDim2.new(0, 16, 0.5, 28)
 counter.BackgroundColor3 = Color3.fromRGB(40, 70, 130)
 counter.BorderSizePixel = 0
 counter.Font = FONT

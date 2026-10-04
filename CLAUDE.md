@@ -152,6 +152,12 @@ Keep the first release small and polished rather than large and unfinished.
 - Roblox requires odds disclosure for paid random items. The shop shows real odds, computed from the same function the server rolls with (`ItemData.rarityWeights`).
 - Purchases are granted once (saved receipts) and only confirmed after a successful save.
 
+## Cash packs and layout (decided by Carter)
+
+- Tapping the cash box opens a popup to buy in-game cash with Robux, three packs (`Settings.CashPacks`, same ProductId-0 "Coming soon" rule as search packs; amounts and prices are placeholders). Handled by `PurchaseService`, shown by `CashShop`.
+- Common items are never worth more than $10 (`ItemData` BaseValue comment explains the cap). Retune starting cash and cash packs when selling is built.
+- The cash, bag and searches boxes are fixed at the left-middle of the screen so they never sit under Roblox's chat window.
+
 ## Ideas raised but not decided
 
 These came up in planning. Ask Carter before building any of them.

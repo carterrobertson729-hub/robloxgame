@@ -51,6 +51,14 @@ Settings.Player = {
 	InventoryLimit = 20,
 }
 
+-- Robux cash packs. Same rules as SearchPacks: Robux is only the label shown in the game, the real
+-- price is set on the Creator Hub, and ProductId 0 means "Coming soon". These amounts are placeholders.
+Settings.CashPacks = {
+	{ Id = "cash_small", Name = "Pocket Change", ProductId = 0, Robux = 25, Cash = 250, Emoji = "💵", ImageId = "" },
+	{ Id = "cash_medium", Name = "Cash Stack", ProductId = 0, Robux = 75, Cash = 1000, Emoji = "💰", ImageId = "" },
+	{ Id = "cash_large", Name = "Money Vault", ProductId = 0, Robux = 199, Cash = 3500, Emoji = "🏦", ImageId = "" },
+}
+
 Settings.DataStoreName = "PlayerData_v1"
 
 return Settings

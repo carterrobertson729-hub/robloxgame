@@ -42,6 +42,7 @@ local SHOP_W = 540
 
 -- Popup
 local shop = Instance.new("Frame")
+shop.Name = "Shop"
 shop.AnchorPoint = Vector2.new(0.5, 0.5)
 shop.Position = UDim2.fromScale(0.5, 0.5)
 shop.Size = UDim2.fromOffset(SHOP_W, 420)
@@ -232,6 +233,10 @@ end)
 
 local function openShop(outOfSearches: boolean)
 	oddsPanel.Visible = false
+	local cashGui = player.PlayerGui:FindFirstChild("CashShop")
+	if cashGui and cashGui:FindFirstChild("Shop") then
+		cashGui.Shop.Visible = false
+	end
 	if outOfSearches then
 		title.Text = "🔍 Out of free searches!"
 		status.Text = "🕛 Free searches come back every day. Or grab a pack:"

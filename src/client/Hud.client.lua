@@ -6,6 +6,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local ItemData = require(ReplicatedStorage.Shared.ItemData)
 local Settings = require(ReplicatedStorage.Shared.Settings)
+local Format = require(ReplicatedStorage.Shared.Format)
 
 local remotes = ReplicatedStorage:WaitForChild("Remotes")
 local dataUpdate = remotes:WaitForChild("DataUpdate") :: RemoteEvent
@@ -32,15 +33,20 @@ end
 
 -- The three always-visible boxes (cash, bag, searches) sit at the left-middle of the screen, away from
 -- the Roblox chat window and menu, which cover the top corners and block clicks.
-local cashBox = panel("Cash", UDim2.fromOffset(230, 44), UDim2.new(0, 16, 0.5, -76))
-local cashLabel = Instance.new("TextLabel")
-cashLabel.Size = UDim2.fromScale(1, 1)
-cashLabel.BackgroundTransparency = 1
-cashLabel.Font = Enum.Font.FredokaOne
-cashLabel.TextSize = 22
-cashLabel.TextColor3 = Color3.fromRGB(110, 230, 130)
-cashLabel.Text = "$0"
-cashLabel.Parent = cashBox
+local cashButton = Instance.new("TextButton")
+cashButton.Name = "CashButton" -- CashShop listens for taps on this
+cashButton.Size = UDim2.fromOffset(230, 44)
+cashButton.Position = UDim2.new(0, 16, 0.5, -76)
+cashButton.BackgroundColor3 = Color3.fromRGB(25, 25, 32)
+cashButton.BackgroundTransparency = 0.1
+cashButton.BorderSizePixel = 0
+cashButton.Font = Enum.Font.FredokaOne
+cashButton.TextSize = 22
+cashButton.TextColor3 = Color3.fromRGB(110, 230, 130)
+cashButton.Text = "💵 $0  ➕"
+cashButton.Parent = gui
+Instance.new("UICorner", cashButton).CornerRadius = UDim.new(0, 10)
+local cashLabel = cashButton
 
 local bagButton = Instance.new("TextButton")
 bagButton.Size = UDim2.fromOffset(230, 44)
@@ -104,7 +110,7 @@ local function render(inventory: { any })
 end
 
 dataUpdate.OnClientEvent:Connect(function(data)
-	cashLabel.Text = "$" .. data.Cash
+	cashLabel.Text = "💵 " .. Format.cash(data.Cash) .. "  ➕"
 	bagButton.Text = "Bag " .. #data.Inventory .. "/" .. Settings.Player.InventoryLimit
 	render(data.Inventory)
 end)

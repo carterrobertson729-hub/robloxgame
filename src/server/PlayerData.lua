@@ -6,7 +6,13 @@ local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Settings = require(ReplicatedStorage.Shared.Settings)
 
-local store = DataStoreService:GetDataStore(Settings.DataStoreName)
+-- GetDataStore errors in a place that is not published yet. Fall back to temporary data so testing still works.
+local storeOk, store = pcall(function()
+	return DataStoreService:GetDataStore(Settings.DataStoreName)
+end)
+if not storeOk then
+	warn("DataStore unavailable (publish the place and enable Studio API access). Progress will not be saved.")
+end
 
 local PlayerData = {}
 local profiles: { [Player]: any } = {}
@@ -32,6 +38,11 @@ local function withRetry(fn: () -> any): (boolean, any)
 end
 
 function PlayerData.load(player: Player)
+	if not storeOk then
+		loadFailed[player] = true
+		profiles[player] = defaultData()
+		return
+	end
 	local key = "Player_" .. player.UserId
 	local ok, data = withRetry(function()
 		return store:GetAsync(key)

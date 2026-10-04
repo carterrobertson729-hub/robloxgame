@@ -1,8 +1,14 @@
 -- Paste this whole file into the Studio Command Bar (View > Command Bar) and press Enter.
 -- Builds Workspace.Store from placeholder blocks. Re-running deletes and rebuilds it.
 
+-- Remember where you put the Donation Bin so re-running this script does not move it back.
+local savedBinCFrame = nil
 local old = workspace:FindFirstChild("Store")
 if old then
+	local oldBin = old:FindFirstChild("Stations") and old.Stations:FindFirstChild("DonationBin")
+	if oldBin and oldBin.PrimaryPart then
+		savedBinCFrame = oldBin.PrimaryPart.CFrame
+	end
 	old:Destroy()
 end
 
@@ -87,6 +93,9 @@ station("PackingTable", "Packing", Vector3.new(12, 4, 6), Vector3.new(28, 2.5, -
 
 -- Sourcing spot outside the front door (the front wall is at Z = -20, spawn is on the +Z side).
 station("DonationBin", "Sourcing", Vector3.new(6, 5, 4), Vector3.new(0, 3, 10), Color3.fromRGB(40, 120, 70))
+if savedBinCFrame then
+	stations.DonationBin:PivotTo(savedBinCFrame)
+end
 
 store.Parent = workspace
 print("Store built: ", #building:GetChildren(), "building parts,", #stations:GetChildren(), "stations (expect 10)")

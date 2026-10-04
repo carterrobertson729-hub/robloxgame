@@ -143,6 +143,11 @@ Keep the first release small and polished rather than large and unfinished.
 - Player data saves reliably and is tested for losing progress before anything else is built on it.
 - Test each feature in Studio before moving on, and tell Carter exactly how to test it himself.
 
+## Donation bin ideas (from Carter, in progress)
+
+- The bin must be movable by Carter in Studio without moving the building. It is its own model (`Stations.DonationBin`, attribute `Station = Sourcing`); BuildStore.lua keeps its position when re-run. More bins can be added by copying it.
+- Free search limit of 3. Extra searches cost Robux, with bigger packs for more Robux. Needs decisions: how free searches refresh, pack sizes and prices. Roblox requires odds disclosure for paid random items, so the find odds must be shown in the game.
+
 ## Ideas raised but not decided
 
 These came up in planning. Ask Carter before building any of them.

@@ -85,5 +85,8 @@ station("Washer2", "Washer", Vector3.new(6, 6, 6), Vector3.new(-20, 3.5, -105), 
 station("ListingDesk", "Listing", Vector3.new(10, 4, 5), Vector3.new(5, 2.5, -110), Color3.fromRGB(80, 80, 90))
 station("PackingTable", "Packing", Vector3.new(12, 4, 6), Vector3.new(28, 2.5, -105), Color3.fromRGB(190, 160, 110))
 
+-- Sourcing spot outside the front door (the front wall is at Z = -20, spawn is on the +Z side).
+station("DonationBin", "Sourcing", Vector3.new(6, 5, 4), Vector3.new(0, 3, 10), Color3.fromRGB(40, 120, 70))
+
 store.Parent = workspace
-print("Store built: ", #building:GetChildren(), "building parts,", #stations:GetChildren(), "stations")
+print("Store built: ", #building:GetChildren(), "building parts,", #stations:GetChildren(), "stations (expect 10)")

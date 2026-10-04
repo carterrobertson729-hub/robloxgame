@@ -101,7 +101,8 @@ Workers come second because they only automate jobs that already exist, so the j
 
 - **Workflow: Rojo + GitHub** (Carter's choice). Code lives in `src/`, synced into Studio. See `README.md` for setup. `tools/BuildStore.lua` is the Command Bar store builder (rewritten to the layout below; Carter has not run it yet).
 - Built so far: `Settings`, `ItemData` (rarities, conditions, placeholder brands, 10 clothing types), server `ItemRoller`, `PlayerData` (DataStore with retry and no-overwrite-on-failed-load), `Main.server.lua`. Not yet tested in Studio.
-- Next: run BuildStore, then the Find action (search spot, remote, cooldown), inventory UI, washing.
+- Built next: `FindService` (ProximityPrompt on the DonationBin, server rolls item, cooldown, bag limit), `FindReveal` client card. Re-run BuildStore to add the `DonationBin` (Station = Sourcing) outside the front door at Z = 10.
+- Next: inventory, washing.
 
 - A starter script, `BuildStore.txt`, was written for the Studio Command Bar. Carter has the file. It has not been confirmed as run in Studio yet, so check before assuming the store exists.
 - It was syntax-checked and its layout was tested against a stand-in for Studio, but never run in Studio itself.

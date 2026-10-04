@@ -5,9 +5,8 @@ Roblox game. Full plan and rules are in [CLAUDE.md](CLAUDE.md).
 ## One-time setup (Windows or Mac)
 
 1. Install Roblox Studio (you have this).
-2. Install **Aftman or Rokit** is NOT needed. Easiest path: install the **Rojo plugin** in Studio
-   (Plugins tab > Manage Plugins > search "Rojo" > Install) and the **Rojo VS Code extension**
-   (VS Code > Extensions > search "Rojo"), which also installs the Rojo program.
+2. Install the **Rojo plugin** in Studio (Plugins tab > Manage Plugins > search "Rojo" > Install),
+   and the **Rojo extension** in VS Code (Extensions > search "Rojo"), which also installs the Rojo program.
 3. Clone this repo to your computer and open the folder in VS Code.
 
 ## Every work session
